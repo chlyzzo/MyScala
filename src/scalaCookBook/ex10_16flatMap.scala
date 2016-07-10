@@ -1,6 +1,6 @@
 package scalaCookBook
 
-//flatMap run map followed by flatten,
+//flatMap run map followed by flatten,每个元素进行一对多转换
 //situation
 //1,use map (or for/yield) create new collection from an collection
 //2,the result collection is list of lists
