@@ -68,7 +68,16 @@ object ex711rdd {
 //                 { f }
 //               }//end map 
     
-    
+    val data=List(("1"->"a"),("2"->"b"),("1"->"c"),("2"->"f"))
+    val rdd3=sc.parallelize(data)
+   
+    val res=rdd3.reduceByKey{ (x,y)=> 
+       println("x="+x+"y="+y)
+       x+"-"+y
+    }
+     res.foreach(println)
+//    val rdd3groupBy=rdd3.groupByKey()
+//    rdd3groupBy.foreach(println)
     
   }
 }

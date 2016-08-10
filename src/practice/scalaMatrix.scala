@@ -2,8 +2,9 @@ package practice
 
 import org.apache.spark._
 import org.apache.spark.util._
-
 import scala.math._
+import org.apache.spark.mllib.linalg.Vectors
+
 object scalaMatrix {
   
   //余弦距离，余弦相似度
@@ -27,5 +28,30 @@ object scalaMatrix {
       //余弦相似度
       val m3=paramatrix1.map(cosDist(_,vec1))
       m3.foreach { x => println(x) }    
+      
+      
+      //map 存储Vector
+      val map1=Map(
+       "vec"-> "[-0.3409798, 0.23111226, 0.12990808]" ,                            
+       "id"->"1"
+      )
+      val map2=Map(
+       "vec"-> "[-0.3409798, 0.23111226, 0.12990808]" ,                            
+       "id"->"2"
+      )
+      val map3=Map(
+       "vec"-> "[-0.3409798, 0.23111226, 0.12990808]" ,                            
+       "id"->"3"
+      )
+      
+      val mapList=List(map1,map2,map3)
+      val mapn=mapList.map{x=>
+        val vec=Vectors.dense(x.get("vec").get.replace("[","").replace("]","").split(",").toArray.map(_.toDouble))
+        Map(
+           "id"->x.getOrElse("id", ""),
+           "vec"->vec
+        )
+      }
+
   }
 }
