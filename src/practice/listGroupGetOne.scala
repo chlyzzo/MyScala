@@ -11,5 +11,7 @@ object listGroupGetOne {
     }
     println(listr)
     
+    val tr=List(1,2,3,5)
+    println(tr.isEmpty)
   }
 }

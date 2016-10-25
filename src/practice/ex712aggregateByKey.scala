@@ -27,6 +27,14 @@ object ex712aggregateByKey {
     //Join two sets is the  _++_
      val sets = pairs.aggregateByKey(new HashSet[Int])(_+_, _++_)
      sets.foreach(println)//(a,Set(1, 5, 3)) (b,Set(7))
-    
+     
+     val pairs2 = sc.parallelize(Array(("a", Map(3->"rt")),("a", Map(4->"yt")),("b", Map(5->"dfs"))))
+     val resReduce2 = pairs2.reduceByKey(_ ++ _) 
+     //(a,Map(3 -> rt, 4 -> yt)),(b,Map(5 -> dfs))
+     resReduce2.foreach(println) 
+     val map1=Map(1->"a")
+     val map2=Map(2->"b")
+     val map3=map1++map2
+     
   }
 }

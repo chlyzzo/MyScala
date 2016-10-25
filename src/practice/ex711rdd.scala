@@ -33,40 +33,7 @@ object ex711rdd {
       }
     }
      println(mapt)
-    //               allCityBroPreRdd=allCityBroPreRdd.map{ f => //(Int, Iterable[(String, List[Pref], Int)])
-//                 println("****cityId="+f._1)
-//                 if(f._1.equals(pro._1)) //cityId
-//                 {
-//                   println("*****pro="+pro._2.prop_id)
-//                       val listScore=f._2.map{ broker => //(String, List[Pref], Int)
-//                       if (broker._3 <= BROKER_RECOMM_PRO_NUM)
-//                       {
-//                          (broker,caculateScore(pro._2,broker._2))
-//                       }
-//                       else
-//                       {
-//                         (broker,0.0)
-//                       }
-//                     }//Iterable[(bro, Double)]
-//                     //排序
-//                     val result=listScore.toSeq.sortWith(_._2 > _._2).map{x=>x._1._1}.take(PRO_RECOMM_BROKER_NUM)
-//                     println("***recomm brokers==="+result)
-//                     //update 
-//                     val iterBros=f._2.map{ broker =>
-//                          if (result.containsSlice(broker._1))
-//                          {
-//                              (broker._1,broker._2,broker._3+1)
-//                          }
-//                          else
-//                          {
-//                            (broker._1,broker._2,broker._3)
-//                          }
-//                     }//end update
-//                     (f._1,iterBros)
-//                 }//end city if 
-//                 else
-//                 { f }
-//               }//end map 
+   
     
     val data=List(("1"->"a"),("2"->"b"),("1"->"c"),("2"->"f"))
     val rdd3=sc.parallelize(data)

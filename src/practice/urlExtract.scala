@@ -38,31 +38,50 @@ object urlExtract {
     def extractTwUrl():Unit={
       //tw 解析，拿到table_type和文章id
     /*
-     * http://m.anjuke.com/sh/daogou/view/5-58413/?from=xf_zixun_tw_news_rd  table_type=5
+    http://m.anjuke.com/sh/daogou/view/5-58413/?from=xf_zixun_tw_news_rd  table_type=5
     http://m.anjuke.com/sh/daogou/view/1-355878/?from=xf_zixun_view_aboutnew table_type=1
     http://m.anjuke.com/sh/daogou/view/2-357912/?from=xf_zixun_guide_click   table_type=2
-    http://m.anjuke.com/sh/daogou/specialztview/5200/?from=xf_zixun_tw_special_zt  table_type=？
-     * 
-     * */
-    val url="http://m.anjuke.com/sh/daogou/specialztview/5200/?from=xf_zixun_tw_special_zt"
-    //val url = "http://m.anjuke.com/sh/daogou/view/2-357912/?from=xf_zixun_guide_click"
-    val urlPatern = "/(\\d+-\\d+)/".r
-    val urlPatern2 = "/(\\d+)/".r
-    val typeAndarticle=urlPatern.findFirstMatchIn(url) match {
-         case Some(o) => (o.group(1).split("-")(0), o.group(1).split("-")(1))            
-         case _ => 
-           urlPatern2.findFirstMatchIn(url) match{
-               case Some(o) => (2, o.group(1))          
-               case _ =>   None
-       }  
-    }
+    http://m.anjuke.com/sh/daogou/specialztview/5200/?from=xf_zixun_tw_special_zt  table_type=2 暂时先别用
+    http://m.anjuke.com/hf/loupan/406106/pingce-1147/?from=app_index_detai    table_type=3
+    */
+    val url ="http://m.anjuke.com/sh/daogou/view/2-357912/?from=xf_zixun_guide_click"
+    val urlPatern1 = "/(\\d+-\\d+)/".r
+    val urlPatern2 = "(\\d+/[?])".r
+    val typeAndarticle= urlPatern1.findFirstMatchIn(url) match {
+         case Some(o) => val typeItem=o.group(1).split("-")(0).toInt
+                     val article_id=o.group(1).split("-")(1).toInt
+                     Some(typeItem,article_id)
+         case _ => urlPatern2.findFirstMatchIn(url) match{
+               case Some(a) =>  
+                     val article_id = a.group(1).split("/")(0).toInt
+                     val typeItem = if (url.contains("-")) 3 else 2
+                     Some(typeItem,article_id)
+               case _ => None
+           }  
+       }              
     println(typeAndarticle)
   }
-  
+    
+  //获取url后面的参数，也就是?之后的连接参数
+  def getParams(url: String): Map[String, String] = {
+    val index = url.indexOf("?")
+    if (index == -1) {
+      return Map.empty
+    }
+
+    url.substring(index + 1).split("&").filter(_.nonEmpty).flatMap { kv =>
+      val segs = kv.split("=").filter(_.nonEmpty)
+      if (segs.length > 1) {
+        Some(segs(0), segs(1))
+      } else {
+        None
+      }
+    }.toMap
+  }
   
   def main(args:Array[String]):Unit={
+     //extractTwUrl()
      extractTwUrl()
-    
 
   }//end main
   

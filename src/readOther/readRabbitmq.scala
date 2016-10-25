@@ -10,7 +10,7 @@ import org.json4s.jackson.JsonMethods._
 import org.slf4j.LoggerFactory
 
 object readRabbitmq {
-  
+
     def createPropStream(ssc: StreamingContext): DStream[String] = {
        val host = ""
        val quene = ""
@@ -22,10 +22,11 @@ object readRabbitmq {
     
    def main(args:Array[String]):Unit={
      println("************")
-     val conf = new SparkConf().setAppName("").setIfMissing("spark.master", "local[4]")
-     val ssc = new StreamingContext(conf, Seconds(2))
+     val conf = new SparkConf().setAppName("").setIfMissing("spark.master", "local[1]")
+     val ssc = new StreamingContext(conf, Seconds(3))
      val rdd=createPropStream(ssc: StreamingContext)
-     rdd.print()
+     
+     rdd.foreachRDD(x=>x.foreach { y => println(y) })
      
     ssc.start()
     sys.addShutdownHook(() => ssc.stop())
